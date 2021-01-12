@@ -1,0 +1,14 @@
+#Database
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/goodev
+    username: bs
+    password: qhs1tjd2
+#Jpa
+  jpa:
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      dll-auto: create-drop
