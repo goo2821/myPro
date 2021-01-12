@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @Component
-@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping(value="/login")
 public class LoginController {
 

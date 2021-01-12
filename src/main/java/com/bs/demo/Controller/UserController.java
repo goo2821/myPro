@@ -4,6 +4,7 @@ import com.bs.demo.Entity.User;
 
 import com.bs.demo.Repository.UserRepository;
 import com.bs.demo.utils.ModelUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -13,8 +14,8 @@ import java.util.Optional;
 
 @RestController
 @Component
-@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping(value="/users")
+@Slf4j
 public class UserController {
 
     @Autowired(required = false)
@@ -22,6 +23,7 @@ public class UserController {
 
     @GetMapping(value="")
     public Iterable<User> findAllUser(){
+        log.info("find all!");
         return userRepo.findAll();
 
     }
@@ -37,7 +39,9 @@ public class UserController {
     }
 
     @PostMapping(value="")
+    @CrossOrigin(origins="*", maxAge=3600, allowedHeaders = "*")
     public Object addUser(@RequestBody User user){
+        log.info("log: " + user);
         if(userRepo.existsByUserId(user.getUserId())){
             return "이미 존재합니다";
         }
