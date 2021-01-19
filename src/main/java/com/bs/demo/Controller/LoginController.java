@@ -27,12 +27,6 @@ public class LoginController {
         User data = userRepo.findByUserId(user.getUserId());
         if(!bct.matches(user.getUserPassword(), data.getUserPassword())) return "비밀번호가 틀립니다.";
 
-        Cookie setCookie = new Cookie(user.getUserId(), "c");
-
-        setCookie.setMaxAge(60*60);
-
-        response.addCookie(setCookie);
-
         return "로그인에 성공하였습니다.";
     }
 

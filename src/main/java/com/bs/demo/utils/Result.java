@@ -2,6 +2,7 @@ package com.bs.demo.utils;
 
 import com.google.gson.JsonObject;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -11,7 +12,9 @@ public enum Result {
     SUCCESS(0, "success"),
     FAIL(1, "fail"),
     USER_EXISTS(101, "The Username Already exists."),
-    USER_NOT_FOUND(102, "The User Could Not Found.");
+    USER_NOT_FOUND(102, "The User Could Not Found."),
+    PRODUCT_NOT_FOUND(201, "The Product Not Found"),
+    DETAIL_NOT_FOUND(202, "자세한 사항에 대한 자료가 등록되지 않았습니다.");
 
     private int code;
     private String msg;

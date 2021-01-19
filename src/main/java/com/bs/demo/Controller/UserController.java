@@ -1,11 +1,14 @@
 package com.bs.demo.Controller;
 
 import com.bs.demo.Entity.User;
+import com.bs.demo.Service.UserService;
+import com.bs.demo.utils.Result;
 
 import com.bs.demo.Repository.UserRepository;
 import com.bs.demo.utils.ModelUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +21,12 @@ import java.util.Optional;
 @Slf4j
 public class UserController {
 
-    @Autowired(required = false)
     private UserRepository userRepo;
+
+    @Autowired
+    UserController(UserRepository userRepo){
+        this.userRepo = userRepo;
+    }
 
     @GetMapping(value="")
     public Iterable<User> findAllUser(){
@@ -30,19 +37,19 @@ public class UserController {
 
     @GetMapping(value="/{idx}")
     public Object findUser(@PathVariable int idx){
-        if(!userRepo.existsById(idx)) return "회원이 존재하지 않습니다.";
+        if(!userRepo.existsById(idx)) return Result.USER_NOT_FOUND.toResponse(HttpStatus.BAD_REQUEST);
 
         Optional<User> user = userRepo.findById(idx);
-        if(user.isEmpty()) return "회원이 존재하지 않습니다.";
+        if(user.isEmpty()) return Result.USER_NOT_FOUND.toResponse(HttpStatus.BAD_REQUEST);
         return user.get();
 
     }
 
     @PostMapping(value="")
-    @CrossOrigin(origins="*", maxAge=3600, allowedHeaders = "*")
     public Object addUser(@RequestBody User user){
         log.info("log: " + user);
         if(userRepo.existsByUserId(user.getUserId())){
+            System.out.println("존재하는 아이디입니다");
             return "이미 존재합니다";
         }
         BCryptPasswordEncoder bcp = new BCryptPasswordEncoder();
@@ -52,6 +59,8 @@ public class UserController {
         String hash = bcp.encode(pw);
 
         user.setUserPassword(hash);
+
+        user.setUserRole("normal");
 
         userRepo.save(user);
         return "성공적으로 등록 되었습니다";

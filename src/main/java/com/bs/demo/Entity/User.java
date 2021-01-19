@@ -3,6 +3,7 @@ package com.bs.demo.Entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.dom4j.swing.XMLTableColumnDefinition;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.sql.Timestamp;
@@ -38,6 +39,6 @@ public class User {
 
     @Column(nullable = false, insertable = false, updatable = false)
     @ColumnDefault(value = "CURRENT_TIMESTAMP")
-    private Timestamp careateDate;
+    private Timestamp createDate;
 
 }
