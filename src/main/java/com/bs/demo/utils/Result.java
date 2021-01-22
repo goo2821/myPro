@@ -2,7 +2,6 @@ package com.bs.demo.utils;
 
 import com.google.gson.JsonObject;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

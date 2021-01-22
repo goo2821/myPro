@@ -3,7 +3,6 @@ package com.bs.demo.Entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.dom4j.swing.XMLTableColumnDefinition;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.sql.Timestamp;

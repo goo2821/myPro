@@ -3,7 +3,6 @@ package com.bs.demo.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -38,9 +37,7 @@ public class ModelUtils {
     }
 
     private static String toUpperCaseFirstString(String str) {
-        if (StringUtils.isEmpty(str)) {
-            return str;
-        }
+        
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 }
