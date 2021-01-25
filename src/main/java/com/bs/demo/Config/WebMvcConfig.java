@@ -25,7 +25,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:8081")
                 .allowedMethods("*")
                 .allowedHeaders("*")
-                .exposedHeaders("jwt-auth-token");
+                .allowCredentials(true);
     }
 
     @Override

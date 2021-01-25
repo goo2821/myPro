@@ -36,7 +36,7 @@ public class JwtService {
     builder.setSubject("로그인 토큰")
       .setExpiration(new Date(System.currentTimeMillis()+ 1000*60*expireMin))
       .claim("User", user).claim("second", "토큰에 담을 데이터 추가");
-
+      System.out.println("Min: " + expireMin);
       builder.signWith(SignatureAlgorithm.HS256, salt.getBytes());
 
       final String jwt = builder.compact();
@@ -47,7 +47,7 @@ public class JwtService {
   }
 
   public void checkValid(final String jwt){
-    log.trace("토큰 점검: {}", jwt);
+    log.info("토큰 점검: {}", jwt);
 
     Jwts.parser().setSigningKey(salt.getBytes()).parseClaimsJws(jwt);
   }

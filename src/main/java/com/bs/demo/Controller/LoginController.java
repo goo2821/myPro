@@ -7,13 +7,9 @@ import com.bs.demo.utils.Result;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +44,7 @@ public class LoginController {
     }
   
     String token = jwtService.create(user);
-    Cookie cookie = new Cookie("test", token);
+    Cookie cookie = new Cookie(user.getUserId(), token);
     cookie.setMaxAge(60 * 60);
     cookie.setHttpOnly(false);
     cookie.setSecure(false);
@@ -59,32 +55,29 @@ public class LoginController {
   @PostMapping(value="/info")
   public Object info(@RequestBody User user, HttpServletRequest request){
 
-    String info = "test123";
+    Cookie[] token = request.getCookies();
 
-    Map<String, Object> result = new HashMap<>();
+    for(int i = 0;i < token.length;i++){
+      System.out.println(token[i].getName() + " token: " + token[i].getValue());
+      jwtService.checkValid(token[i].getValue());
+    }
 
-    HttpStatus status = null;
 
-    result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
-
-    result.put("status", true);
-    result.put("info", info);
-    result.put("request_body", user);
-    status = HttpStatus.ACCEPTED;
-
-    return new ResponseEntity<Map<String, Object>>(result, status);
+    return Result.SUCCESS.toResponse(HttpStatus.OK);
   }
 
   @DeleteMapping(value = "")
   public Object logout(@RequestBody User user, HttpServletResponse response) {
 
-    Cookie cookie = new Cookie(user.getUserId(), null);
+    System.out.println(user.getUserId());
 
+    Cookie cookie = new Cookie(user.getUserId(), null);
+  
     cookie.setMaxAge(0);
 
     response.addCookie(cookie);
 
-    return "로그 아웃에 성공하셨습니다.";
+    return Result.SUCCESS.toResponse(HttpStatus.OK);
 
   }
 
