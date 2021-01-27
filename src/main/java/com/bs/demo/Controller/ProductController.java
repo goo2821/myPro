@@ -24,7 +24,7 @@ public class ProductController {
   // /investments?page=1
   @GetMapping
   public Iterable<Product> findProductAll(
-      @PageableDefault(sort = "id", direction = Sort.Direction.DESC, value = 2) Pageable pageable) {
+      @PageableDefault(sort = "id", direction = Sort.Direction.DESC, value = 4) Pageable pageable) {
 
     return productRepo.findAll(pageable);
 
@@ -37,7 +37,7 @@ public class ProductController {
 
   @GetMapping(value = "/{type}")
   public Object findProduct(@PathVariable String type,
-      @PageableDefault(sort = "id", direction = Sort.Direction.DESC, value = 2) Pageable pageable,
+      @PageableDefault(sort = "id", direction = Sort.Direction.DESC, value = 4) Pageable pageable,
       @RequestParam(value = "yield", required = false, defaultValue = "0") int yield,
       @RequestParam(value = "address", required = false, defaultValue = "") String address,
       @RequestParam(value = "title", required = false, defaultValue = "") String title) {

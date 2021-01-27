@@ -25,7 +25,7 @@ public class DetailsController {
 
     if (!productRepo.existsById(product_id))
       return Result.DETAIL_NOT_FOUND.toResponse(HttpStatus.BAD_REQUEST);
-
+    System.out.println("test: " + productRepo.findById(product_id));
     return productRepo.findById(product_id);
   }
 
