@@ -25,29 +25,20 @@ public class ProductController {
   @GetMapping
   public Iterable<Product> findProductAll(
       @PageableDefault(sort = "id", direction = Sort.Direction.DESC, value = 4) Pageable pageable) {
-
+    System.out.println("페이지: " + pageable);
     return productRepo.findAll(pageable);
 
   }
 
-  @GetMapping(value="/test")
-  public Object test(){
-    return productRepo.findByProductNameContainingAndProductAddressContaining("오", "중원");
-  }
-
   @GetMapping(value = "/{type}")
   public Object findProduct(@PathVariable String type,
-      @PageableDefault(sort = "id", direction = Sort.Direction.DESC, value = 4) Pageable pageable,
-      @RequestParam(value = "yield", required = false, defaultValue = "0") int yield,
-      @RequestParam(value = "address", required = false, defaultValue = "") String address,
-      @RequestParam(value = "title", required = false, defaultValue = "") String title) {
-
-    //return productRepo.findByProductNameContainingAndProductAddressContainingAndYieldGreaterThanEqualAndTitleContaining(type, address, yield, title);
-    return productRepo.findByProductNameContainingAndProductAddressContaining("오", "중원");
-
+      @PageableDefault(sort = "id", direction = Sort.Direction.DESC, value = 3) Pageable pageable) {
+        System.out.println("타입: " + type + "page: " + pageable);
+        System.out.println(productRepo.findByTypeContaining(pageable, type));
+    return productRepo.findByTypeContaining(pageable, type);
   }
 
-  @GetMapping(value = "/detail/{idx}")
+  @PostMapping(value = "/{idx}")
   public Object findProduct(@PathVariable int idx) {
 
     if (!productRepo.existsById(idx))
